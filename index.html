@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-theme="opal">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Just Show Up — Opal Grit</title>
+  <meta name="theme-color" content="#0b0a0a" />
+  <style>
+    :root{--bg:#0b0a0a;--bg-2:#0f0e0f;--card:#141316;--card-2:#19181d;--ink:#e9e7ee;--muted:#b7b4c3;--accent:#d07c2e;--accent-2:#6db6ff;--good:#6bdc8a;--warn:#ffcf57;--danger:#ff6b6b;--ring:radial-gradient(120% 140% at 20% 0%,#2a1e18 0%,#0b0a0a 55%,#0b0a0a 100%);--radius:16px;--shadow:0 10px 30px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.03);--glass:rgba(255,255,255,.06)}
+    [data-theme="midnight"]{--accent:#7aa2ff;--accent-2:#a1ffe5}
+    [data-theme="light"]{--bg:#faf9ff;--bg-2:#f2f0ff;--card:#ffffff;--card-2:#f6f6ff;--ink:#1a1528;--muted:#5b566b;--ring:radial-gradient(120% 140% at 20% 0%,#fff1e3 0%,#faf9ff 60%);--shadow:0 10px 20px rgba(20,16,40,.08),inset 0 1px 0 rgba(255,255,255,.8)}
+    [data-theme="amoled"]{--bg:#000;--bg-2:#000;--card:#0a0a0a;--card-2:#0d0d0d;--ink:#f8f8f8;--muted:#bdbdbd;--accent:#ff995b;--accent-2:#7ae0ff;--ring:radial-gradient(120% 140% at 20% 0%,#1a100a 0%,#000 60%)}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"SF Pro",Inter,Arial,sans-serif;background:var(--ring),radial-gradient(120% 180% at 110% 120%,#211a12 0%,transparent 50%) fixed;color:var(--ink);letter-spacing:.2px;-webkit-font-smoothing:antialiased}
+    .wrap{min-height:100dvh;display:grid;grid-template-rows:auto 1fr auto}
+    header.app{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(to bottom,rgba(0,0,0,.6),rgba(0,0,0,0));backdrop-filter:saturate(140%) blur(8px)}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+    .opal{width:26px;height:26px;border-radius:50%;background:radial-gradient(120% 80% at 10% 20%,rgba(255,255,255,.95),rgba(255,255,255,.1) 45%,rgba(255,255,255,0) 60%),conic-gradient(from 0deg,#7de1ff,#c5a0ff,#ffe58a,#7de1ff);box-shadow:0 0 24px rgba(125,225,255,.35),inset 0 0 18px rgba(255,255,255,.5);filter:saturate(130%)}
+    .streak{margin-left:auto;display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,rgba(255,179,92,.15),rgba(255,145,0,.08));border:1px solid rgba(255,200,120,.35);padding:8px 12px;border-radius:999px;box-shadow:var(--shadow)}
+    .streak .orb{position:relative;width:28px;height:28px;border-radius:50%;background:radial-gradient(60% 60% at 40% 35%,#ffd19a,#ff8a3d 60%,#a33d05 100%);box-shadow:0 0 24px rgba(255,140,60,.45),0 0 60px rgba(255,120,20,.25);overflow:hidden}
+    .streak .orb::after{content:"";position:absolute;inset:-40%;border-radius:50%;background:conic-gradient(from 0deg,rgba(255,255,255,0),rgba(255,255,255,.8),rgba(255,255,255,0) 30%);animation:spin 5s linear infinite;filter:blur(6px)}
+    .streak b{font-variant-numeric:tabular-nums;letter-spacing:.5px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .celebrate .orb{animation:pulse 1.2s ease-out 1,pop 300ms ease-out 1}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,140,60,.8)}100%{box-shadow:0 0 0 32px rgba(255,140,60,0)}}
+    @keyframes pop{0%{transform:scale(.8)}100%{transform:scale(1)}}
+    .milestones{display:flex;align-items:center;gap:14px;padding:8px 10px;margin:2px 0 10px;overflow-x:auto}
+    .milestone{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:44px}
+    .milestone small{color:var(--muted);font-size:10px}
+    .gem,.gem-big{--g1:#bff3ff;--g2:#caa7ff;--g3:#ffe7a6;position:relative;width:26px;height:26px;border-radius:42% 58% 60% 40%/43% 40% 60% 57%;background:radial-gradient(120% 90% at 18% 12%,rgba(255,255,255,.95) 0 18%,rgba(255,255,255,.45) 26%,rgba(255,255,255,0) 55%),conic-gradient(from 30deg at 60% 45%,var(--g1),var(--g2),var(--g3),var(--g1));box-shadow:0 0 24px rgba(125,225,255,.35),inset 0 0 18px rgba(255,255,255,.45);overflow:hidden}
+    .gem::before,.gem-big::before{content:"";position:absolute;inset:-35%;background:conic-gradient(from 0deg,rgba(255,255,255,0) 0 10%,rgba(255,255,255,.9) 15%,rgba(255,255,255,0) 25% 100%);filter:blur(6px);animation:spin 6s linear infinite;mix-blend-mode:screen;opacity:.7}
+    .gem::after,.gem-big::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:-18%;width:68%;height:8px;border-radius:50%;background:radial-gradient(60% 100% at 50% 0,rgba(0,0,0,.6),rgba(0,0,0,0));box-shadow:inset 0 2px 6px rgba(255,255,255,.08)}
+    .gem-big{width:120px;height:120px;box-shadow:0 0 70px rgba(125,225,255,.45),inset 0 0 40px rgba(255,255,255,.6);animation:float 3s ease-in-out infinite alternate}
+    .milestone.locked .gem{filter:grayscale(1) saturate(.35);opacity:.5}
+    @keyframes float{from{transform:translateY(2px)}to{transform:translateY(-6px)}}
+    .evolve{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(120% 140% at 50% 10%,rgba(255,255,255,.06),rgba(0,0,0,.85));backdrop-filter:blur(6px) saturate(140%);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:50}
+    .evolve.open{opacity:1;pointer-events:auto}
+    .evolve-card{width:min(520px,92vw);padding:20px;border-radius:18px;border:1px solid rgba(255,255,255,.16);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));text-align:center;box-shadow:var(--shadow)}
+    .tabs{position:sticky;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px)}
+    .tab-btn{appearance:none;border:0;background:transparent;color:var(--muted);padding:12px 6px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:6px}
+    .tab-btn.active{color:var(--ink)}
+    .tab-btn .icon{width:22px;height:22px;display:grid;place-items:center;border-radius:9px;background:rgba(255,255,255,.06)}
+    .tab-btn.active .icon{background:linear-gradient(180deg,var(--accent-2),var(--accent));color:#0c0c0e;font-weight:700}
+    main{padding:8px 14px 80px}
+    .page{display:none}
+    .page.active{display:block}
+    .habits{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:14px 14px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px}
+    .card .emoji{font-size:20px;width:28px;text-align:center}
+    .card h3{margin:0;font-size:16px;letter-spacing:.2px}
+    .card small{display:block;margin-top:4px;color:var(--muted)}
+    .card .actions{margin-left:auto;display:flex;align-items:center;gap:10px}
+    .ring-btn{width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;position:relative;background:radial-gradient(35% 35% at 50% 50%,rgba(255,255,255,.25),rgba(255,255,255,0) 60%),conic-gradient(from 0deg,var(--accent-2),var(--accent),var(--accent-2));padding:0;box-shadow:0 8px 18px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.2)}
+    .ring-btn::after{content:"+";position:absolute;inset:3px;display:grid;place-items:center;border-radius:50%;background:var(--card-2);color:var(--ink);font-weight:800;font-size:20px}
+    .card.done{opacity:.55;filter:saturate(.6)}
+    .card.done .ring-btn::after{content:"✓";color:var(--good)}
+    .lock{color:var(--muted);font-size:12px}
+    .level{display:flex;align-items:center;gap:14px;padding:12px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.10);box-shadow:var(--shadow);margin:6px 0 12px}
+    .level-gem{position:relative;width:96px;height:96px;overflow:hidden;border-radius:42% 58% 60% 40%/43% 40% 60% 57%;filter:saturate(120%)}
+    .level-gem .gem-big{position:absolute;inset:0;width:100%;height:100%;transform:scale(.8);transform-origin:center}
+    .level-gem .gem-fill{--p:0;position:absolute;left:0;right:0;bottom:0;height:calc((1 - var(--p)) * 100%);background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.25));transition:height 800ms cubic-bezier(.22,.61,.36,1)}
+    .level-text b{display:block;font-size:14px;letter-spacing:.3px}
+    .level-text small{color:var(--muted)}
+    .level-gem.pulse{animation:levelPulse 900ms ease-out 1}
+    @keyframes levelPulse{0%{box-shadow:0 0 0 0 rgba(125,225,255,.45)}100%{box-shadow:0 0 0 22px rgba(125,225,255,0)}}
+    .hero{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.10);box-shadow:var(--shadow);margin:6px 0 12px;overflow:hidden}
+    .hero-text h2{margin:4px 0 6px;letter-spacing:.2px}
+    .hero-text p{margin:0;color:var(--muted)}
+    .tag{display:inline-block;padding:4px 8px;font-size:10px;letter-spacing:.8px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.02));color:var(--muted)}
+    .hero-fig{transform:translateY(2px)}
+    .hero-fig svg{display:block;filter:drop-shadow(0 10px 30px rgba(0,0,0,.35))}
+    .sheet{position:fixed;inset:auto 0 0 0;background:var(--bg-2);border-top-left-radius:18px;border-top-right-radius:18px;box-shadow:0 -12px 40px rgba(0,0,0,.45);transform:translateY(110%);transition:transform .3s ease;z-index:30;max-height:86dvh;display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,.06)}
+    .sheet.open{transform:translateY(0)}
+    .sheet header{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .sheet h4{margin:0;font-size:16px}
+    .grid{padding:10px 12px;overflow:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .thumb{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:1/1;background:#0e0e0f;border:1px solid rgba(255,255,255,.06)}
+    .thumb video,.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .sheet footer{padding:12px 14px;display:flex;gap:10px}
+    .btn{appearance:none;border:1px solid rgba(255,255,255,.14);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));padding:12px 14px;border-radius:14px;color:var(--ink);font-weight:600}
+    .btn.primary{background:linear-gradient(180deg,var(--accent-2),var(--accent));color:#0d0c10;border-color:rgba(255,255,255,.3)}
+    .btn:disabled{opacity:.45;filter:saturate(.5);cursor:not-allowed}
+    .quote-card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;margin-top:6px;box-shadow:var(--shadow)}
+    blockquote{margin:0;font-size:20px;line-height:1.5}
+    cite{display:block;margin-top:10px;color:var(--muted)}
+    .coach{display:flex;flex-direction:column;gap:12px}
+    .msg{padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid rgba(255,255,255,.06);max-width:85%}
+    .msg.me{margin-left:auto;background:linear-gradient(180deg,var(--accent-2),var(--accent));color:#0d0c10}
+    .composer{display:flex;gap:8px;position:sticky;bottom:64px;padding:6px 0}
+    .composer input{flex:1;padding:14px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:var(--card-2);color:var(--ink)}
+    .persona{appearance:none;border:1px solid rgba(255,255,255,.12);background:var(--card-2);color:var(--ink);border-radius:10px;padding:6px 8px}
+    .history{display:flex;flex-direction:column;gap:12px}
+    .hgroup{padding:8px 2px}
+    .hgroup h5{margin:0 0 8px;color:var(--muted);font-size:12px;letter-spacing:.5px}
+    .proofs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .proofs .thumb{aspect-ratio:1/1}
+    .toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(30px);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.15);color:var(--ink);padding:12px 16px;border-radius:14px;opacity:0;transition:.25s;z-index:40}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:35}
+    .row{display:flex;gap:10px;align-items:center}
+    a{color:var(--accent-2)}
+  </style>
+</head>
+<body>
+  <div class="wrap" id="app">
+    <header class="app">
+      <div class="brand">
+        <div class="opal" aria-hidden="true"></div>
+        <span>Just Show Up</span>
+      </div>
+      <div class="streak" id="streakBadge" title="Daily streak">
+        <div class="orb"></div>
+        <div class="row"><small>Streak</small><b id="streakCount">0</b></div>
+      </div>
+    </header>
+    <main id="pages">
+      <section class="page active" id="page-today">
+        <div class="hero">
+          <div class="hero-text">
+            <a class="tag" href="https://github.com/Protonsss" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:none">by Protonsss</a>
+            <h2>Show up today</h2>
+            <p>Attach photo/video proof. Build streaks. Stay consistent.</p>
+          </div>
+          <div class="hero-fig" aria-hidden="true">
+            <svg viewBox="0 0 180 110" width="180" height="110" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="planet" cx="50%" cy="45%" r="60%">
+                  <stop offset="0%" stop-color="#dff3ff" />
+                  <stop offset="60%" stop-color="#8fc8ff" />
+                  <stop offset="100%" stop-color="#a78bfa" />
+                </radialGradient>
+                <linearGradient id="suit" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#e6e6f0"/>
+                </linearGradient>
+              </defs>
+              <g opacity=".6">
+                <circle cx="10" cy="12" r="1.3" fill="#fff"/>
+                <circle cx="30" cy="22" r="1.1" fill="#fff"/>
+                <circle cx="60" cy="10" r="1.4" fill="#fff"/>
+                <circle cx="80" cy="28" r="1" fill="#fff"/>
+                <circle cx="150" cy="14" r="1.2" fill="#fff"/>
+                <circle cx="165" cy="36" r="1" fill="#fff"/>
+              </g>
+              <circle cx="128" cy="44" r="28" fill="url(#planet)" opacity=".9"/>
+              <ellipse cx="128" cy="60" rx="36" ry="8" fill="rgba(0,0,0,.18)"/>
+              <g transform="translate(40,30)">
+                <path d="M-18,28 C0,22 6,18 12,10" stroke="rgba(255,255,255,.35)" stroke-width="2" fill="none"/>
+                <circle cx="24" cy="12" r="12" fill="url(#suit)" stroke="rgba(0,0,0,.08)" />
+                <circle cx="24" cy="12" r="7" fill="#1a2430" />
+                <circle cx="20" cy="9" r="2" fill="rgba(255,255,255,.65)"/>
+                <rect x="14" y="22" width="20" height="18" rx="6" fill="url(#suit)" stroke="rgba(0,0,0,.08)" />
+                <rect x="20" y="26" width="8" height="6" rx="2" fill="#8fc8ff" opacity=".7"/>
+                <rect x="6" y="24" width="10" height="6" rx="3" fill="url(#suit)"/>
+                <rect x="34" y="24" width="10" height="6" rx="3" fill="url(#suit)"/>
+                <rect x="16" y="40" width="8" height="12" rx="3" fill="url(#suit)"/>
+                <rect x="24" y="40" width="8" height="12" rx="3" fill="url(#suit)"/>
+                <rect x="15" y="50" width="10" height="5" rx="2" fill="#c9d0df"/>
+                <rect x="23" y="50" width="10" height="5" rx="2" fill="#c9d0df"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="level" id="levelCard" aria-label="Current gemstone progress">
+          <div class="level-gem" id="levelGemBox">
+            <div class="gem-big" id="levelGemCore"></div>
+            <div class="gem-fill" id="levelGemFill"></div>
+          </div>
+          <div class="level-text">
+            <b id="levelName">Opal Sprout</b>
+            <small id="levelProg">0 / 1 days</small>
+          </div>
+        </div>
+        <div class="milestones" id="milestoneBar" aria-label="Streak milestones"></div>
+        <div class="habits" id="habitList"></div>
+      </section>
+      <section class="page" id="page-quotes">
+        <div class="quote-card">
+          <blockquote id="quoteText">“Discipline equals freedom.”</blockquote>
+          <cite id="quoteAuthor">— Jocko Willink</cite>
+          <div class="row" style="margin-top:14px">
+            <button class="btn" id="nextQuote">Next</button>
+            <button class="btn" id="shareQuote">Share</button>
+          </div>
+        </div>
+      </section>
+      <section class="page" id="page-coach">
+        <div class="row" style="justify-content:space-between;margin:6px 2px">
+          <div class="row"><span style="opacity:.6">Persona</span>
+            <select class="persona" id="persona">
+              <option value="goggins">Goggins Mode</option>
+              <option value="gentle">Gentle Coach</option>
+              <option value="scientist">Scientist</option>
+            </select>
+          </div>
+        </div>
+        <div id="chat" class="coach"></div>
+        <div class="composer"><input id="prompt" placeholder="Ask your life coach…" />
+          <button class="btn primary" id="send">Send</button>
+        </div>
+      </section>
+      <section class="page" id="page-history"><div class="history" id="historyList"></div></section>
+      <section class="page" id="page-settings">
+        <div class="quote-card">
+          <h3 style="margin:4px 0 12px">Appearance</h3>
+          <div class="row" style="gap:12px;flex-wrap:wrap">
+            <button class="btn" data-theme="opal">Opal</button>
+            <button class="btn" data-theme="midnight">Midnight</button>
+            <button class="btn" data-theme="light">Light</button>
+            <button class="btn" data-theme="amoled">AMOLED</button>
+          </div>
+          <div style="height:8px"></div>
+          <button id="resetAll" class="btn" style="width:100%">Reset all data</button>
+        </div>
+      </section>
+    </main>
+    <nav class="tabs" id="tabs">
+      <button class="tab-btn active" data-page="page-today"><span class="icon">🧿</span>Today</button>
+      <button class="tab-btn" data-page="page-quotes"><span class="icon">💬</span>Quotes</button>
+      <button class="tab-btn" data-page="page-coach"><span class="icon">🧠</span>Coach</button>
+      <button class="tab-btn" data-page="page-history"><span class="icon">🗂️</span>History</button>
+      <button class="tab-btn" data-page="page-settings"><span class="icon">⚙️</span>Settings</button>
+    </nav>
+  </div>
+  <aside class="sheet" id="sheet">
+    <header><h4 id="sheetTitle">Add evidence</h4></header>
+    <div style="padding:10px 14px" class="row"><input id="fileInput" type="file" accept="image/*,video/*" capture="environment" multiple /><span class="lock">Attach at least one photo or video to complete.</span></div>
+    <div class="grid" id="thumbGrid"></div>
+    <footer><button class="btn" id="cancelSheet">Cancel</button><button class="btn primary" id="completeBtn" disabled>Complete</button></footer>
+  </aside>
+  <div class="evolve" id="evolve" aria-hidden="true">
+    <div class="evolve-card"><div id="evolveGem" class="gem-big"></div><h3 id="evolveTitle" style="margin:8px 0 6px;text-align:center"></h3><p style="margin:0 0 14px;color:var(--muted);text-align:center">Milestone reached</p><button class="btn primary" id="evolveClose" style="width:100%">Continue</button></div>
+  </div>
+  <div class="toast" id="toast">🔥 You completed all habits today!</div>
+  <canvas id="confetti"></canvas>
+<script>
+const HABITS=[{id:"caloric-deficit",name:"Eat at a caloric deficit",emoji:"🥗",freq:"Every day"},{id:"exercise",name:"Exercise",emoji:"💪",freq:"Every day"},{id:"deep-work",name:"Deep Work (3h)",emoji:"💻",freq:"Every day"},{id:"reflect",name:"Reflection / Prayer",emoji:"🕯️",freq:"Every day"},{id:"vitamins",name:"Take vitamins",emoji:"💊",freq:"Every day"}];
+const todayKey=()=>new Date().toISOString().slice(0,10);
+const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){localStorage.setItem(k,JSON.stringify(v))}};
+const MILESTONES=[{d:1,name:"Opal Sprout",colors:["#bff3ff","#caa7ff","#ffe7a6"]},{d:7,name:"Aurora Opal",colors:["#aef6ff","#cdb1ff","#ffdca3"]},{d:30,name:"Nebula Opal",colors:["#dff9ff","#bfa8ff","#ffe9b8"]},{d:60,name:"Prismatic Opal",colors:["#b7fff0","#9bb8ff","#ffe1a6"]},{d:100,name:"Celestial Opal",colors:["#f5fff8","#ccb6ff","#b5ecff"]}];
+const milestoneBar=document.getElementById('milestoneBar');
+function gemHTML(colors,big=false){const[g1,g2,g3=g2]=colors;const cls=big?'gem-big':'gem';return`<span class="${cls}" style="--g1:${g1};--g2:${g2};--g3:${g3}" aria-hidden="true"></span>`}
+function renderMilestones(streak){if(!milestoneBar)return;const reached=ls.get('milestones',[]);milestoneBar.innerHTML=MILESTONES.map(m=>{const unlocked=streak>=m.d||reached.includes(m.d);return`<div class="milestone ${unlocked?'unlocked':'locked'}" title="${m.d} day${m.d>1?'s':''}: ${m.name}">${gemHTML(m.colors)}<small>${m.d}</small></div>`}).join('')}
+function getLevelInfo(streak){const tiers=MILESTONES.map(m=>m.d).sort((a,b)=>a-b);let prev=0,next=tiers.find(d=>d>streak)??(tiers[tiers.length-1]+100);for(let i=tiers.length-1;i>=0;i--){if(streak>=tiers[i]){prev=tiers[i];break}}const tier=MILESTONES.find(m=>m.d===next)||{name:'Ascendant Opal',colors:['#eaffff','#d8c6ff','#b3f0ff']};const span=Math.max(1,next-prev);const p=Math.max(0,Math.min(1,(streak-prev)/span));return{prev,next,name:tier.name,colors:tier.colors,progress:p,need:span}}
+function updateLevelUI(streak){const info=getLevelInfo(streak);const core=document.getElementById('levelGemCore');core.innerHTML=gemHTML(info.colors,true);const box=document.getElementById('levelGemBox');const fill=document.getElementById('levelGemFill');requestAnimationFrame(()=>{box.classList.add('pulse');fill.style.setProperty('--p',info.progress);setTimeout(()=>box.classList.remove('pulse'),900)});document.getElementById('levelName').textContent=info.name;document.getElementById('levelProg').textContent=`${Math.max(0,streak-info.prev)} / ${info.need} days`}
+const DB_NAME='jsu-v1',STORE='evidence';
+function openDB(){return new Promise((res,rej)=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(STORE)){db.createObjectStore(STORE,{keyPath:'id'})}};req.onsuccess=()=>res(req.result);req.onerror=()=>rej(req.error)})}
+async function putEvidence(record){const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(record);tx.oncomplete=()=>res(true);tx.onerror=()=>rej(tx.error)})}
+async function getAllEvidence(){const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction(STORE,'readonly');const req=tx.objectStore(STORE).getAll();req.onsuccess=()=>res(req.result||[]);req.onerror=()=>rej(tx.error)})}
+const listEl=document.getElementById('habitList');
+const completedToday=new Set(ls.get('done:'+todayKey(),[]));
+function habitCard(h){const card=document.createElement('div');card.className='card';card.dataset.id=h.id;if(completedToday.has(h.id))card.classList.add('done');card.innerHTML=`<div class="emoji">${h.emoji}</div><div style="min-width:0"><h3>${h.name}</h3><small>${h.freq}</small></div><div class="actions"><button class="ring-btn" title="Add evidence &amp; complete"></button></div>`;card.querySelector('.ring-btn').onclick=()=>openSheet(h);return card}
+function renderHabits(){listEl.innerHTML='';HABITS.forEach(h=>listEl.appendChild(habitCard(h)))}
+const sheet=document.getElementById('sheet');
+const sheetTitle=document.getElementById('sheetTitle');
+const fileInput=document.getElementById('fileInput');
+const thumbGrid=document.getElementById('thumbGrid');
+const completeBtn=document.getElementById('completeBtn');
+let currentHabit=null;
+function openSheet(h){currentHabit=h;sheetTitle.textContent=`Add evidence — ${h.name}`;fileInput.value='';thumbGrid.innerHTML='';completeBtn.disabled=true;sheet.classList.add('open')}
+document.getElementById('cancelSheet').onclick=()=>sheet.classList.remove('open');
+fileInput.onchange=async e=>{thumbGrid.innerHTML='';const files=[...e.target.files];files.forEach(f=>{const el=document.createElement('div');el.className='thumb';if(f.type.startsWith('video')){const v=document.createElement('video');v.src=URL.createObjectURL(f);v.muted=true;v.playsInline=true;v.controls=true;el.appendChild(v)}else{const img=document.createElement('img');img.src=URL.createObjectURL(f);el.appendChild(img)}thumbGrid.appendChild(el)});completeBtn.disabled=files.length===0};
+completeBtn.onclick=async()=>{const files=[...fileInput.files];if(files.length===0||!currentHabit)return;const date=todayKey();await Promise.all(files.map(async(f,i)=>{const rec={id:Date.now()+i+Math.random(),date,habitId:currentHabit.id,type:f.type,name:f.name,blob:f};await putEvidence(rec)}));completedToday.add(currentHabit.id);ls.set('done:'+date,[...completedToday]);sheet.classList.remove('open');const card=listEl.querySelector('[data-id="'+currentHabit.id+'"]');if(card)card.classList.add('done');refreshHistory();maybeCelebrate()};
+const streakBadge=document.getElementById('streakBadge');
+const streakCountEl=document.getElementById('streakCount');
+function computeStreak(){const today=new Date();let count=0;for(let d=0;;d++){const dt=new Date(today);dt.setDate(today.getDate()-d);const key=dt.toISOString().slice(0,10);const done=ls.get('done:'+key,[]);const allDone=HABITS.every(h=>done.includes(h.id));if(allDone)count++;else break}return count}
+function updateStreakUI(){const cnt=computeStreak();streakCountEl.textContent=cnt;renderMilestones(cnt);updateLevelUI(cnt)}
+function maybeCelebrate(){const today=todayKey();const done=ls.get('done:'+today,[]);const allDone=HABITS.every(h=>done.includes(h.id));if(!allDone)return;if(localStorage.getItem('celebrated:'+today))return;localStorage.setItem('celebrated:'+today,'1');const s=computeStreak();checkMilestone(s);updateLevelUI(s);streakBadge.classList.add('celebrate');setTimeout(()=>streakBadge.classList.remove('celebrate'),1500);toast('🔥 All habits complete! +1 streak');confetti()}
+function checkMilestone(streak){const reached=ls.get('milestones',[]);const m=MILESTONES.find(x=>x.d===streak&&!reached.includes(x.d));if(!m)return;reached.push(m.d);ls.set('milestones',reached);showEvolution(m)}
+const evolveEl=document.getElementById('evolve');
+const evolveGem=document.getElementById('evolveGem');
+const evolveTitle=document.getElementById('evolveTitle');
+document.getElementById('evolveClose').onclick=()=>evolveEl.classList.remove('open');
+function showEvolution(m){evolveGem.innerHTML=gemHTML(m.colors,true);evolveTitle.textContent=`Gemstone evolved: ${m.name}`;evolveEl.classList.add('open');confetti()}
+const QUOTES=[["Discipline equals freedom.","Jocko Willink"],["The obstacle is the way.","Marcus Aurelius"],["We are what we repeatedly do. Excellence, then, is not an act but a habit.","Will Durant"],["The successful warrior is the average man, with laser-like focus.","Bruce Lee"],["You miss 100% of the shots you don't take.","Wayne Gretzky"],["Hard choices, easy life. Easy choices, hard life.","Jerzy Gregorek"],["Suffer the pain of discipline or suffer the pain of regret.","Unknown"],["Action is the foundational key to all success.","Pablo Picasso"],["It does not matter how slowly you go as long as you do not stop.","Confucius"],["If you are going through hell, keep going.","Winston Churchill"],["People who are crazy enough to think they can change the world, are the ones who do.","Rob Siltanen"],["Do what you can, with what you have, where you are.","Theodore Roosevelt"],["The best way out is always through.","Robert Frost"],["The only way to do great work is to love what you do.","Steve Jobs"],["Success is not final, failure is not fatal: it is the courage to continue that counts.","Winston Churchill"],["Whether you think you can or you think you can't, you're right.","Henry Ford"],["Dream big. Start small. But most of all, start.","Simon Sinek"],["Motivation is what gets you started. Habit is what keeps you going.","Jim Rohn"],["What you do every day matters more than what you do once in a while.","Gretchen Rubin"],["You don't have to be extreme, just consistent.","Unknown"],["Win the morning, win the day.","Tim Ferriss"],["Be so good they can't ignore you.","Steve Martin"],["I am not a product of my circumstances. I am a product of my decisions.","Stephen R. Covey"],["Small deeds done are better than great deeds planned.","Peter Marshall"],["If it’s important to you, you will find a way. If not, you’ll find an excuse.","Unknown"],["If you want to change the world, start by making your bed.","William H. McRaven"],["Discipline is choosing between what you want now and what you want most.","Abraham Lincoln"],["The secret of getting ahead is getting started.","Mark Twain"],["Grit is living life like it’s a marathon, not a sprint.","Angela Duckworth"],["Energy and persistence conquer all things.","Benjamin Franklin"],["The man in the arena matters more than the critic in the stands.","Theodore Roosevelt"],["Don't count the days; make the days count.","Muhammad Ali"],["It's not that I'm so smart, it's just that I stay with problems longer.","Albert Einstein"],["Clarity equals power.","Tony Robbins"],["You become what you give your attention to.","Epictetus"],["You must not fool yourself—and you are the easiest person to fool.","Richard Feynman"],["Simplicity is the ultimate sophistication.","Leonardo da Vinci"],["Fear is a reaction. Courage is a decision.","Winston Churchill"],["The best time to plant a tree was 20 years ago. The second best time is now.","Chinese Proverb"],["What gets measured gets managed.","Peter Drucker"],["If you wait, all that happens is you get older.","Larry McMurtry"],["Fall seven times, stand up eight.","Japanese Proverb"],["Success is largely a matter of holding on after others have let go.","William Feather"],["He who has a why to live can bear almost any how.","Viktor Frankl"],["The way you do anything is the way you do everything.","Tom Waits"],["Pain is inevitable. Suffering is optional.","Haruki Murakami"],["Mood follows action.","Richie Norton"],["Focus on the process, not the outcome.","Nick Saban"],["The more you sweat in training, the less you bleed in battle.","Navy Proverb"],["Go one more.","Nick Bare"],["Make your bed.","William H. McRaven"],["A year from now you may wish you had started today.","Karen Lamb"],["If you can't, you must. If you must, you can.","Tony Robbins"],["Slow is smooth. Smooth is fast.","Special Forces"],["Success is the sum of small efforts, repeated day in and day out.","Robert Collier"],["Courage is grace under pressure.","Ernest Hemingway"],["Direction is more important than speed.","Unknown"],["Discomfort is the currency of your dreams.","Brooke Castillo"],["Work hard in silence. Let success make the noise.","Frank Ocean"],["You can have results or excuses, not both.","Arnold Schwarzenegger"],["An amateur practices until they get it right. A pro practices until they can’t get it wrong.","Unknown"],["Habits are the compound interest of self-improvement.","James Clear"],["Your future is created by what you do today, not tomorrow.","Robert Kiyosaki"],["If you're going through a challenging time, keep moving.","Martin Luther King Jr."],["Be curious, not judgmental.","Walt Whitman"],["Success usually comes to those who are too busy to be looking for it.","Henry David Thoreau"],["You are the average of the five people you spend the most time with.","Jim Rohn"],["The only limit to our realization of tomorrow is our doubts of today.","Franklin D. Roosevelt"],["Talent is given. Potential is earned.","Unknown"],["If something is important enough, you do it even if the odds are not in your favor.","Elon Musk"],["The difference between ordinary and extraordinary is that little extra.","Jimmy Johnson"],["If you want to be interesting, be interested.","David Ogilvy"],["Never let success get to your head; never let failure get to your heart.","Drake"],["We become what we think about.","Earl Nightingale"],["Success is no accident.","Pelé"],["Champions keep playing until they get it right.","Billie Jean King"],["If you want to go fast, go alone. If you want to go far, go together.","African Proverb"],["Stay focused and never give up.","Kobe Bryant"],["The more you learn, the more you earn.","Warren Buffett"],["Spend more time alone.","Naval Ravikant"],["What you are will show in what you do.","Thomas A. Edison"],["You don't find willpower, you create it.","Unknown"],["If you cannot do great things, do small things in a great way.","Napoleon Hill"],["Discipline makes today hard and tomorrow easy.","Unknown"],["Character is what you are in the dark.","Dwight L. Moody"],["Start where you are. Use what you have. Do what you can.","Arthur Ashe"],["If you want to win the game, you must play by your own rules.","Unknown"],["Be precise in your speech.","Jordan Peterson"],["Practice until you can't get it wrong.","Unknown"],["What is not started today is never finished tomorrow.","Johann Wolfgang von Goethe"],["One day or day one. You decide.","Unknown"],["Seek respect, not attention. It lasts longer.","Unknown"],["I hated every minute of training, but I said, \"Don’t quit. Suffer now and live the rest of your life as a champion.\"","Muhammad Ali"],["The only thing standing between you and your goal is the story you keep telling yourself.","Tony Robbins"],["If the wind will not serve, take to the oars.","Latin Proverb"],["Stay hungry. Stay foolish.","Steve Jobs"],["Nothing works unless you do.","Maya Angelou"],["Be ashamed to die until you have won some victory for humanity.","Horace Mann"],["We do not rise to the level of our expectations. We fall to the level of our training.","Archilochus"],["To live is to suffer; to survive is to find meaning in the suffering.","Friedrich Nietzsche"],["Live as if you were to die tomorrow. Learn as if you were to live forever.","Mahatma Gandhi"],["There is more to life than increasing its speed.","Mahatma Gandhi"],["A smooth sea never made a skilled sailor.","Franklin D. Roosevelt"],["The harder you work, the luckier you get.","Gary Player"],["Don’t stop when you’re tired. Stop when you’re done.","David Goggins"],["The amount of stress you can tolerate while remaining effective is directly correlated to the level of success you will enjoy.","Andrew Tate"],["Become the kind of person who can handle it.","Unknown"],["Every strike brings me closer to the next home run.","Babe Ruth"],["Make it happen. Shock everyone.","Unknown"],["Your life is happening now. Make it count.","Unknown"],["If opportunity doesn’t knock, build a door.","Milton Berle"],["You don’t need a new plan. You need to commit to the current one.","Unknown"],["Success is never owned; it’s rented, and rent is due every day.","J.J. Watt"],["The only easy day was yesterday.","US Navy SEALs"],["Be the designer of your world and not merely the consumer of it.","James Clear"],["Perfect is the enemy of good.","Voltaire"],["Do the hard work, especially when you don’t feel like it.","Unknown"],["Consistency beats intensity.","Unknown"],["Focus on what you can control.","Unknown"]];
+const qText=document.getElementById('quoteText'),qAuth=document.getElementById('quoteAuthor');
+function nextQuote(){const[t,a]=QUOTES[Math.floor(Math.random()*QUOTES.length)];qText.textContent='“'+t+'”';qAuth.textContent='— '+a}
+document.getElementById('nextQuote').onclick=nextQuote;
+document.getElementById('shareQuote').onclick=async()=>{const text=qText.textContent+' '+qAuth.textContent;try{await navigator.share({text})}catch(e){navigator.clipboard.writeText(text);toast('Copied quote to clipboard')}};nextQuote();
+const chat=document.getElementById('chat'),send=document.getElementById('send'),promptEl=document.getElementById('prompt'),personaSel=document.getElementById('persona');
+function addMsg(role,html){const m=document.createElement('div');m.className='msg'+(role==='me'?' me':'');m.innerHTML=html;chat.appendChild(m);chat.scrollTop=chat.scrollHeight}
+function coachReply(mode,text){const base=text.toLowerCase();if(mode==='goggins'){return`No excuses. ${pep()} Now: ${microTask(base)}. Log proof. Stay hard.`}if(mode==='scientist'){return`Try a 20‑minute block. Define a measurable output and a trigger. Then attach your evidence. ${pep()}`}return`You’ve got this. Keep it simple: ${microTask(base)}. I’m proud of you.`}
+function pep(){return['One more rep','One more page','Breathe and move','Small wins compound'][Math.floor(Math.random()*4)]}
+function microTask(txt){if(txt.includes('study'))return'Open notes and summarize one page';if(txt.includes('gym')||txt.includes('workout'))return'Put on shoes and do a 5‑minute warmup';if(txt.includes('write'))return'Draft 5 bullet points';return'Do a 2‑minute starter action'}
+send.onclick=()=>{const v=promptEl.value.trim();if(!v)return;addMsg('me',v);promptEl.value='';setTimeout(()=>addMsg('bot',coachReply(personaSel.value,v)),400)};
+async function refreshHistory(){const all=await getAllEvidence();const byDate={};all.forEach(r=>{(byDate[r.date]=byDate[r.date]||[]).push(r)});const list=document.getElementById('historyList');list.innerHTML='';Object.keys(byDate).sort((a,b)=>b.localeCompare(a)).forEach(date=>{const group=document.createElement('div');group.className='hgroup';group.innerHTML=`<h5>${date}</h5>`;const proofs=document.createElement('div');proofs.className='proofs';byDate[date].forEach(rec=>{const card=document.createElement('div');card.className='thumb';const url=URL.createObjectURL(rec.blob);if((rec.type||'').startsWith('video')){const v=document.createElement('video');v.src=url;v.controls=true;v.playsInline=true;v.muted=true;card.appendChild(v)}else{const img=document.createElement('img');img.src=url;card.appendChild(img)}proofs.appendChild(card)});group.appendChild(proofs);list.appendChild(group)})}
+document.getElementById('resetAll').onclick=async()=>{if(!confirm('Reset all data (streak, completions, evidence)?'))return;localStorage.clear();const db=await openDB();db.close();indexedDB.deleteDatabase(DB_NAME);location.reload()};
+const root=document.documentElement;document.querySelectorAll('button[data-theme]').forEach(btn=>{btn.onclick=()=>{root.setAttribute('data-theme',btn.dataset.theme);localStorage.setItem('theme',btn.dataset.theme)}});const savedTheme=localStorage.getItem('theme');if(savedTheme)root.setAttribute('data-theme',savedTheme);
+document.querySelectorAll('.tab-btn').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.page).classList.add('active');if(b.dataset.page==='page-history')refreshHistory()}});
+renderHabits();updateStreakUI();refreshHistory();
+</script>
+</body>
+</html>
